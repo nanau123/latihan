@@ -1,19 +1,20 @@
 nama: Cek Kode HTML (Windows)
 on:
-push:
-branches:
--main
-pull_request:
+    push:
+        branches:
+            -main
+            pull_request:
+                
+    jobs:
+        lint:
+            runs-on: windows-latest
+            
+            steps:
+            -name: Checkout Repository
+            uses: actions/checkout@v4
 
-jobs:
-lint:
-runs-on: windows-latest
-steps:
--name: Checkout Repository
-uses: actions/checkout@v4
+            -name: Install HTMLHint
+            run: npminstall -g htmlhint
 
--name: Install HTMLHint
-run: npminstall -g htmlhint
-
--name: PeriksaHTML
-run: htmlhint"**/*.html"
+            -name: PeriksaHTML
+            run: htmlhint"**/*.html"
