@@ -1,20 +1,24 @@
-nama: Cek Kode HTML (Windows)
+name: Automasi Testing Sebelum Merge
+
 on:
-    push:
-        branches:
-            -main
-            pull_request:
-                
-    jobs:
-        lint:
-            runs-on: windows-latest
-            
-            steps:
-            -name: Checkout Repository
-            uses: actions/checkout@v4
+  pull_request:
+    branches:
+      - main
 
-            -name: Install HTMLHint
-            run: npminstall -g htmlhint
+jobs:
+  test:
+    runs-on: windows-latest
 
-            -name: PeriksaHTML
-            run: htmlhint"**/*.html"
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install HTMLHint & Stylelint
+        run: |
+          npm install -g htmlhint stylelint
+
+      - name: Periksa HTML
+        run: htmlhint "/*.html"
+
+      - name: Periksa CSS
+        run: stylelint "/*.css"
